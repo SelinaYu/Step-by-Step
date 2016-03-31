@@ -26,6 +26,7 @@ gulp的使用步骤：
 后来搜索了发现，建议不要全局安装gulp，因为gulp会自动引入相关的支持包，这些包安装在/usr/local/lib/node_modules/下，不利于管理，易引起冲突,并且全局gulp升级后与此项目gulpfile.js代码不兼容。所以建议在项目中安装，输入如下命令安装：
 `$npm install --save-dev gulp`
 
+
 gulp常用的模块如下：
 
       压缩js：   gulp-uglify
@@ -34,6 +35,12 @@ gulp常用的模块如下：
       编译less： gulp-less
       编译sass:  gulp-ruby-sass或者gulp-sass
 
+使用gulp构建一个项目的步骤：
+
+     1. 在命令行输入 npm init（会依次要求补全项目信息，生成package.json）
+     2. 安装gulp到项目 $npm install --save-dev gulp
+     3. 安装依赖的模块
+     
 示例：压缩css的gulpfile.js文件的代码如下：
 ```
 // 获取 gulp
