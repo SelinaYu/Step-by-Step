@@ -29,6 +29,8 @@ sublime配置react开发环境，使用babel插件
 1. React可以渲染HTML标签和React组件，HTML标签，只需使用小写字母开头的标签名；React组件，只需创建一个大写字母开头的本地变量。
 2. 由于JSX就是JavaScript,一些标识符像`class`和`for`不建议作为XML属性名。作为替代，ReactDOM使用`className`和`htmlFor`来做对应的属性。
 3. 要使用JavaScript表达式作为属性值，只需要把这个表达式用`{}`,不要使用引号`""`
+4. 修改`props`是不好的，因为react不能帮你检查属性类型，这样子即使你的属性类型有错误也不能得到清晰的错误提示。`props`应当是被当作禁止修改的。
+
 
 
 
