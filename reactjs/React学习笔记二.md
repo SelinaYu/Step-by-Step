@@ -30,11 +30,14 @@
    
      <div dangerouslySetInnerHTML={{__html:'First &middot; Second'}} />
 
-[1]: http://www.fileformat.info/info/unicode/char/b7/index.htm
   **<h3>关于State</h3>**
   
  1. State应该包括那些可能被组件的事件处理器改变并触发用户界面更新的数据
  2. `this.state`应该仅包括用户界面状态所需的最少数据。所以它不应该包括**计算所得数据，React组件，基于props的重复数据**。
+ 3. 不要直接改变`this.state`，因为调用`setState()`可能会替换掉你的更改，把`this.state`当做不可变。
+ 4. `setState()`不会改变`this.state`,而是创建一个即将处理的`state`转变。在调用该方法后获取`this.state`的值得到还不是最新的值。可以看下[React 源码剖析系列 － 解密 setState][2]
+ 5. 如果render()方法从this.prps或者this.state之外的地方读取数据，或者直接改变`this.state`,你需要通过`forceUpdate()`
+ 6. 如果在`render()`方法中调用`setState()`,尽管`state`被改变，`render()`将会仅执行一次。
  
 **<h3>动态子级</h3>**
 
@@ -52,7 +55,7 @@
       </ol>
     );
   }
-```
+```  
 方式二：使用`object`来做`key`的子级。`object`的`key`会被当作每个组件的`key`。牢记JavaScript并不总是保证属性的顺序会被保留。数字型属性会按大小排序并排在其它属性前面，一旦发生这种情况，React渲染组件的顺序就会混乱，可以在key前面加一个字符串前缀来避免：
 ```
 render: function() {
@@ -76,3 +79,7 @@ render: function() {
   1. 如果往原生HTML元素传入HTML规范里不存在的元素，React不会显示它们。如果需要自定义属性，要添加`data-`前缀，同时，`aria-`开头的[网络无障碍]可以正常使用。
   2. 如果在手机或平板等触摸设备上使用React,需要调用`React.initializeTouchEvents(true);`启动触摸事件处理
   3. 我们可以重写`shouldComponentUpdate()`返回false来让React跳过子树的处理。如果数据变化时让`shouldComponentUpdate()`返回false,React就不能保证用户界面同步。当使用它的时候一定确保你清楚到底做了什么，并且只在遇到明显性能问题的时候才使用它。不要低估 JavaScript 的速度，DOM 操作通常才是慢的原因。
+
+
+  [1]: http://www.fileformat.info/info/unicode/char/b7/index.htm
+  [2]: http://zhuanlan.zhihu.com/p/20328570
