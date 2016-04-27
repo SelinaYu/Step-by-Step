@@ -9,14 +9,14 @@
 2） 输入`npm install --save-dev webpack`在项目中安装`webpack`。
 3） 在`MyApp`里新建webpack的配置文件`webpack.config.js`,添加如下代码
 ```
-var config = {
-	entry: "app/main.js",
+module.exports = {
+	entry: "./app/main.js",
 	output:{
 		filename:"bundle.js",
-		path:__dirname+"dist"
+		path:__dirname+"/dist"
 	}
 }
-module.exports = config;
+ 
 ```
 4）建立如下文件目录：
 
@@ -43,7 +43,7 @@ module.exports = config;
 </html>
 ```
 6） 输入`npm install --save react react-dom`安装React
-7)  要支持 jsx和ES6语法还需安装`npm intall --save-dev babel-preset-react babel-preset-es2015 babel-loader`
+7)  要支持 jsx和ES6语法还需安装`npm install --save-dev babel-preset-react babel-preset-es2015 babel-loader`
 8)在`webpack.config.js`添加如下`loader`
 ```
     module:{
