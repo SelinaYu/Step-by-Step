@@ -59,3 +59,18 @@ bar();
 函数绑定运算符是并排的两个双冒号（::），双冒号左边是一个对象，右边是一个函数。
 如果双冒号左边是冒号，右边是一个对象的方法，则等于将该方法绑定在该对象上面。该运算符返回的是原对象，因此可以采用链式写法
 <h3>对象的扩展</h3>
+**方法的name属性**
+注意：
+1) `bind`方法创造的函数，`name`属性返回`bound`加上 原函数的名字。
+2）`Function`构造函数创造的函数，`name`属性返回`anonymous`。
+```
+(new Function()).name //anonymous
+var doSomething = function(){
+}
+doSomething().bind().name //bound doSomething
+```
+**Object.is()**和`====`基本一致。不同之处有两个：
+1）`+0`不等于`-0`
+2) `NaN`等于自身
+**Object.assign**实行的是浅拷贝，拷贝得到的是这个对象的引用。
+
