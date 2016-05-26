@@ -41,6 +41,51 @@ map.get(['a']);   //undefined
 2)任意一个对象的`Symbol.iterator`方法，等于该对象的遍历器生成函数。
 3)`for...of`循环可以自动遍历Generator函数，但当返回对象的属性为true是，for...of循环会中止，且不包含该返回对象。
 4)使用`yield*`语句，用来在一个Generator函数里执行另一个Generator函数（`yield*`不过是`for...of`的一种简写，任何数据结构只要有Iterator接口，就可以被`yield*`遍历）
+5)Generator函数不会返回结果，而是返回一个指针对象
+<h3>Promise函数</h3>
+1）Promise新建后就会立即执行。
+2）一般来说，不要在then方法里面定义Reject状态的回调函数（即then的第二个参数），总是使用catch方法。
+```
+promise
+  .then(function(data){
+  })
+  .catch(function(err){
+  })
+```
+<h3>Async函数</h3>
+async函数对Generator函数的改进：
 
-
-·
+- async自带执行器，Generator函数借助co
+- 返回Promise对象，Genetator返回Iterator对象
+注意：
+1) await命令后面是一个Promise对象，否则被转成Promise,运行结果可能是rejected，所以把`await`命令放在`try..catch`中
+2)多个`await`命令后面的异步操作，不存在继发关系，最好让它们同时触发
+```
+//写法一
+let [foo,bar] = await Promise.all([getFoo(),getBar()]);
+//写法二
+let fooPromise = getFoo();
+let barPromise = getBar();
+let foo = await fooPromise;
+let bar = await barPromise;
+```
+<h3>Class</h3>
+1）类(`Class`)的内部所有定义的方法，都是不可枚举的，在ES5中是可枚举的。
+2）`constructor`方法会被默认添加，也可以指定返回另外一个对象
+```
+Class Foo{
+  constructor(){
+    return Object.create(null);//返回全新的对象，导致实例对象不是Foo类的实例
+  }
+}
+new Foo() instanceof Foo //false
+```
+3）使用表达式定义类的时候注意class 后面的变量只在内部代码使用，类名为声明的那个。
+```
+const MyClass = class Me{
+  getClassNamez(){
+    return Me.name;
+  }
+}
+```
+4) 不存在变量提升
