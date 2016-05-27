@@ -69,23 +69,3 @@ let barPromise = getBar();
 let foo = await fooPromise;
 let bar = await barPromise;
 ```
-<h3>Class</h3>
-1）类(`Class`)的内部所有定义的方法，都是不可枚举的，在ES5中是可枚举的。
-2）`constructor`方法会被默认添加，也可以指定返回另外一个对象
-```
-Class Foo{
-  constructor(){
-    return Object.create(null);//返回全新的对象，导致实例对象不是Foo类的实例
-  }
-}
-new Foo() instanceof Foo //false
-```
-3）使用表达式定义类的时候注意class 后面的变量只在内部代码使用，类名为声明的那个。
-```
-const MyClass = class Me{
-  getClassNamez(){
-    return Me.name;
-  }
-}
-```
-4) 不存在变量提升
