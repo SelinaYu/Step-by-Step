@@ -1,4 +1,4 @@
-﻿# 学习笔记一（Grammer,Object）
+﻿# 学习笔记一（Grammer,Object，Functions）
 
 标签（空格分隔）： JavaScript语言精粹
 
@@ -21,7 +21,7 @@
 - 空字符串' '
 - 数字 0
 - 数字 NaN     
-g
+
 (四)return如果没有指定返回值，返回值是`undefined`。JavaScript不允许在`return`和`break`关键字和表达式之间换行。
 (五)运算符优先级(排在上面的运算符优先级越高)
 
@@ -39,15 +39,61 @@ g
 
 <h1>Object</h1>
 (一)对象通过引用来传递。它们永远不会被复制。
+(二)减少全局变量污染：
+1)为你的应用只创建一个唯一的全局变量。
+2）使用闭包来进行信息隐藏来减少全局污染。
+<h1>Functions</h1>
+(一)调用函数时，出来声明定义时的形式参数，还接收了两个附加的参数：`this`和`arguments`
+(二)关于this的值的4种调用模式
 
+1) 方法(函数作为对象的属性)调用模式。
+方法被调用时，this被绑定到该对象。如下this.age相当于xiaoyu.age。
+```
+var xiaoyu = {
+  age: 20,
+  getAge: function(){
+    return this.age++;
+   }
+}
+xiaoyu.getAge();
+console.log(xiaoyu.age);  //21
+```
 
+2) 函数调用模式
+this绑定到全局对象
+```
+var age =20;
+function increAge(){
+  return this.age +=1;
+}
+var xiaoyu = {
+  age: 0,
+  callIncreAge: function(){
+    increAge();
+  }
+}
+xiaoyu.callIncreAge();
+console.log(age); //21
+```
+3) 构造器调用模式
+使用`new`调用，this会绑定到该新的实例对象。如下，注意这时this指向不再是方法调用模式下的调用对象，而是构造器返回的对象。
+```
+var Person ={
+  age:0,
+  constructorFun: function(age){
+    this.age = age;
+    return this.age;//在这里相当于xiaoyu.age
+  }
+}
+var xiaoyu = new Person.constructorFun(20);
+console.log(Person.age);//0
+console.log(xiaoyu.age);//20
 
+```
+4) apply调用模式
+this的指向传递给apply方法中的第一个参数。
 
-
-
-
-
-
+(三)如果使用new调用函数且返回值不是一个对象，则返回this(新对象)。
 
 
 
