@@ -1,4 +1,4 @@
-﻿# 学习笔记二（Inheritance）
+﻿# 学习笔记二（Inheritance,Array）
 
 标签（空格分隔）： JavaScript语言精粹
 
@@ -16,7 +16,13 @@ var myObject = maker({
   last:l
 })
 ```
-
+(二)Functional模式
+1.创建一个新对象
+2.有选择地定义私有实例变量和方法
+3.给这个新对象扩充方法。
+4.返回那个新对象
+<h1>Array</h1>
+(一)JavaScript数组的length是没有上限的。超过length的数字来作下标存储元素不会发生越界错误。
 
 
 
