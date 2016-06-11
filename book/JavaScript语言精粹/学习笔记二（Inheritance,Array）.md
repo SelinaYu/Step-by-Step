@@ -23,6 +23,12 @@ var myObject = maker({
 4.返回那个新对象
 <h1>Array</h1>
 (一)JavaScript数组的length是没有上限的。超过length的数字来作下标存储元素不会发生越界错误。
+(二)length是由数组中最大的整数属性+1，设置更大的length不会给数组分配更多的空间,把length设小导致大于等于length的属性被删除。
 
-
+```
+var array = [1,2,3,4];
+array.length = 2;
+console.log(array[2]);   //undefined
+```
+(三)[]会让所含的表达式调用toString()方法返回当前值。
 
