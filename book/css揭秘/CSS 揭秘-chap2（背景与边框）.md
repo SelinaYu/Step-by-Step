@@ -1,0 +1,108 @@
+﻿# CSS 揭秘-chap2（背景与边框）
+
+标签（空格分隔）： css
+
+---
+<h1>chap 1</h1>
+css编码技巧：
+1) 尽量减少代码重复(DRY,Don't Repeat Yourself)，减少改动时要编辑的地方
+2) 某些值相互依赖时，应该把它们的相互关系用代码表达出来
+3)css有史以来第一个变量 `currentColor`
+
+<h1>chap 2</h1>
+
+<h3>1. 半透明边框</h3>
+默认情况下，背景会延伸到边框所在的区域下层。所以，设置白色背景和半透明白色边框的时候，白色背景会从半透明边框透上来。
+**使用background-clip属性：**设置元素的背景（背景图片或颜色）是否延伸到边框下面。
+```
+div {
+    border: 10px solid hsla(0,0%,100%,.5);
+    background: white;
+    background-clip: padding-box;
+}
+```
+<h3>2. 多重边框</h3>
+一) box-shadow方案
+box-shadow支持逗号分隔语法，我们可以创建任意数量的投影。
+**但是需要注意：**
+1.box-shadow是层层叠加的
+2.投影的行为跟边框不完全一致，不会影响布局，也不会受到box-sizing的影响
+3.box-shadow所创建的加边框，并不响应鼠标事件。
+```
+div {
+	width: 100px;
+	height: 60px;
+	margin: 25px;
+	background: yellowgreen;
+	box-shadow: 0 0 0 10px #655,
+            0 0 0 15px deeppink,
+            0 2px 5px 15px rgba(0,0,0,.6) ;
+}
+```
+二）outline方案
+假设你只需要两层边框，一层常规边框，一层outline产生外层的边框。优点：边框样式(虚线)灵活，还可以使用outline-offset控制它跟元素边缘之间的间距。
+**需要注意：**
+1.只适用于双层“边框”，不接受逗号分隔多个值
+2.outline边框不一定贴合border-radius属性产生的圆角
+```
+div {
+	width: 100px;
+	height: 60px;
+	margin: 25px;
+	background: yellowgreen;
+	border: 10px solid #655;
+	outline: 5px solid deeppink;
+}
+```
+<h3>3. 灵活的背景定位</h3>
+`background-position`指定背景图片距离任意角的偏移量，默认情况是以padding box为准的。常见情况：偏移量和容器的内边距一致。
+一般代码实现如下：
+```
+padding: 10px;
+background:url(picture.jpg) no-repeat #58a;
+background-position:right 10px bottom 10px;
+```
+上面的代码不够DRY，可通过background-origin自动跟着我们设定的内边距走。
+```
+padding : 10px;
+background: url(picture.jpg) no-repeat #58a bottom right;
+background-origin: content-box;
+```
+
+<h3>4. 边框内圆角</h3>
+实现这个可以使用两个div，外面的设置边框，里面的div设置`border-radius`。这个方案更加灵活，但是，如果只需要达成实色效果还可以用另一种方法：
+```
+background: tan;
+border-radius:.8em;
+padding:1em;
+box-shadow:0 0 0 .6em #655;
+outline: .6em solid #655;
+```
+上面代码的实现基于两个事实：
+1.描边不会跟着元素的圆角走(前面提到过)
+2.box-shadow会跟着边框走
+
+**注意：** box-shadow属性指定的扩张值并不一定 等于描边的值，，推荐使用稍小一些的值。
+<h3>5. 条纹背景</h3>
+创建不等宽的条纹
+```
+background: linear-gradient(#fb3 30%,#58a 30%);
+background-size: 100% 30px;
+```
+上面不符合DRY,修改条纹宽度的时候要修改两个数字。
+>规范：如果某个色标的位置比整个列表中在它之前的色标的位置都小,则该色标的位置值会被设置为它前面所有色标位置值的最大值。
+
+所以，当我们把上面第二个色标的位置值设置为0，那它的位置总是会被浏览器调整为前一个色标值。
+**斜向条纹**
+设置单个贴片(tile)包含四条条纹，实现无缝拼接。
+```
+background:linear-gradient(45deg,#fb3 25%,#58a 0,#58a 50%,#fb3 0 ,#fb3 75%,#58a 0);
+background-size: 30px 30px;
+```
+我们还有更好的方法创建斜向条纹：`repeating-linear-gradient`和`repeating-radial-gradient`。
+大多数情况下，我们想要的条纹图案往往属于同一个色调，如果是这样，我们可以不用为每种条纹单独指定颜色，而是把最深的颜色指定为背景色，同时把半透明白色的条纹叠加在背景色之上来得到。
+```
+background:#58a;
+background-image: repeating-linear-gradient(30deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,.1) 15px,transparent 0 ,transparent 30px);
+```
+上面两个代码是一样的，现在只需要修改一个地方就可以改变所有颜色了。而且对于不支持的浏览器还起到了回退的作用。
