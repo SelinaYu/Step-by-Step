@@ -106,3 +106,48 @@ background:#58a;
 background-image: repeating-linear-gradient(30deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,.1) 15px,transparent 0 ,transparent 30px);
 ```
 上面两个代码是一样的，现在只需要修改一个地方就可以改变所有颜色了。而且对于不支持的浏览器还起到了回退的作用。
+<h3>6.复杂的背景图案</h3>
+**网格**
+把水平和垂直的条纹叠加起来。
+```
+        #test2{
+        	width:500px;
+        	height: 500px;
+        	border:2px solid ;
+        	background:  #58a;
+        	background-image: 
+        	    linear-gradient(white 1px,transparent 0),
+        	    linear-gradient(90deg,white 1px,transparent 0),
+        	    linear-gradient(hsla(0,0%,100%,.3) 1px,transparent 0),
+        	    linear-gradient(90deg ,hsla(0,0%,100%,.3) 1px,transparent 0);
+        	background-size: 75px 75px,75px 75px,
+        	                 15px 15px,15px 15px;
+        }
+```
+**波点**
+使用径向渐变，使用两层圆点阵列图案，并把它们的背景定位错开，就可以得到波点图案。
+```
+background: #655;
+background-image: 
+   radial-gradient(tan 20%,transparent 0),
+   radial-gradient(tan 20%, transparent 0);
+background-size: 30px 30px;
+background-position: 0 0,15px 15px;
+```
+**棋盘**
+只用一层css渐变无法创建四周有空隙的方块。这里使用两个直角三角形拼合我们想要的方块。
+```
+
+background: #eee;
+background-image: 
+	linear-gradient(45deg, rgba(0,0,0,.25) 25%, transparent 0, transparent 75%, rgba(0,0,0,.25) 0),
+	linear-gradient(45deg, rgba(0,0,0,.25) 25%, transparent 0, transparent 75%, rgba(0,0,0,.25) 0);
+background-position: 0 0, 15px 15px;
+background-size: 30px 30px;
+```
+**角向渐变**
+css图像(第四版)定义了一种新的渐变形式，可以生成角向渐变(圆锥渐变)。生成方式：所有色标的颜色变化是由一条射线绕着端点旋转来推进的。可以很简单的实现上面棋盘的效果。
+```
+background: conic-gradient(#bbb 0,#bbb 25%,#eee 0,#eee 50%);
+background-size: 30px 30px;
+```
