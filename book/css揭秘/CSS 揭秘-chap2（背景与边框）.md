@@ -151,3 +151,29 @@ css图像(第四版)定义了一种新的渐变形式，可以生成角向渐变
 background: conic-gradient(#bbb 0,#bbb 25%,#eee 0,#eee 50%);
 background-size: 30px 30px;
 ```
+<h3>7.伪随机背景</h3>
+**Alex Walker**提出通过质数来增加随机真实性的想法，这个技巧被定名为“蝉原则”。模拟条纹的随机性：把这组条纹从一个平面拆散为多个图层：一种作为底色，另外的作为条纹以不同间隔平铺。因为有可能各层背景以不同间距重复数次后会再次统一对齐，可以使用质数来把贴片的尺寸最大化。
+```
+background:hsl(20,40%,90%);
+background-image:
+   	linear-gradient(90deg, #fb3 11px, transparent 0),
+	linear-gradient(90deg, #ab4 23px, transparent 0),
+	linear-gradient(90deg, #655 23px, transparent 0);
+background-size: 83px 100%,61px 100%,41px 100%;
+```
+<h3>8.连续的图像边框</h3>
+把一幅图案应用为边框，而不是背景。先了解border-image的原理九宫格伸缩法：把图片切割成九块，应用到元素边框相应的边和角。这样无法适配尺寸稍有差异的其他元素，而是希望出现在拐角处的图片区域随着元素宽高和边框厚度的变化而变化。
+方法一：使用两个元素，一个设为背景，一个存放内容，并设置白色背景，这里略。
+缺点：把结构和表现混合起来。
+方法二：使用一个元素达成完全一样的效果。主要思路在图片之上，叠加一层纯白的实色背景，使用`background-clip`设置不同的值，这里需要注意的是图片的显示是放置在`padding-box`，需要使用`background-origin`设置。
+```
+div {
+	border: 1em solid transparent;
+	background: linear-gradient(white, white) padding-box,
+	            url(http://csssecrets.io/images/stone-art.jpg) border-box  0 / cover;
+	width: 21em;
+	padding: 1em;
+
+}
+```
+
