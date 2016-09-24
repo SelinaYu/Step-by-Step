@@ -121,4 +121,85 @@ nav a::before {
 	transform-origin: bottom;//3D空间旋转时，可以把它的底边固定住。
 }
 ```
+<h3>简单的饼图</h3>
+**基于transform方案**
+思路：把圆形的左右两部份指定为上述颜色，然后用伪元素覆盖上去，通过旋转来决定露出多大的扇区。
 
+```
+.pie {
+    width:100px;height:100px;
+    border-radius:50%;
+    background:yellowgreen;
+    background-image: linear-gradient(to right, transparent 50%, currentColor 0);
+    color: #655;
+}
+.pie::before {
+	content: '';
+	display: block;
+	margin-left: 50%;
+	height: 100%;
+	border-radius:0 100% 100% 0/ 50%;
+    background-color: inherit;//遮住圆形棕色
+    transform-origin: left;//绕着圆形的圆心来旋转
+color: #655;
+}
+
+.pie::before {
+	content: '';
+	display: block;
+	margin-left: 50%;
+	height: 100%;
+	border-radius: 0 100% 100% 0 / 50%;
+	background-color: inherit;
+	transform-origin: left;
+	animation: spin 3s linear infinite, bg 6s step-end infinite;
+}
+
+@keyframes spin {
+	to { transform: rotate(.5turn); }
+}
+@keyframes bg {
+	50% { background: currentColor; }
+}
+```
+当我们希望用如下的结构，就能得到两个饼图时，就需要使用内联样式添加到元素上去。
+```
+<div class="pie">20%</div>
+<div class="pie">60%</div>
+```
+**解决方案**：使用上面的动画，但动画必须处于暂停状态，这里 我们要用负的动画延时来**直接**跳至动画中的任意时间，并定格在那里。
+css动画(第一版)规范：
+
+> 一个负的延时值是是合法的。与0s的延时类似，它意味着动画会立即开始播放，但会自动前进到延时值的绝对值处，就好像动画在过去已经播放了指定的时间一样。因此实际效果就是动画跳过指定时间而从中间开始播放了。
+
+ 因为我们的动画是暂停的，所以动画的第一帧将是唯一显示出的那一帧。在饼图上显出的比率就是我们的`animation-delay`值在总的动画持续 时间中所占的比率。
+```
+ .pie::before{
+ /*其他样式和上述的一样*/
+	animation: spin 50s linear infinite, bg 100s step-end infinite;
+	animation-play-state: paused;//动画暂停状态
+	animation-delay: inherit;//我们希望内联样式设置在.pie元素上
+ }
+```
+**SVG解决方案**
+```
+<svg viewBox="0 0 32 32">
+<circle r = "16" cx="16" cy="16"/>
+</svg>
+```
+```
+svg{
+  width:100px;
+  height:100px;
+  transform:rotate(-90deg);
+  background:yellowgreen;
+  border-radius:50%;
+}
+circle{
+ fill:yellowgreen;
+  stroke:#655;
+  stroke-width:32;
+  stroke-dasharray:38 100;
+}
+```
+如果不希望每画一个饼图都要重复编写一次SVG标签。可以是用js实现这个过程的自动化。
