@@ -7,29 +7,35 @@
 - [canvas学习笔记][2]
 - [Quirks mode和Standards mode][3]
 - [New features of HTML5][4]
+
 ## [JavaScript][5]
 - [null和undefined的区别][6]
 - [call() 和 apply()的用法与区别][7]
 - [CommonJS,AMD and CMD][8]
 - [事件处理程序][9]
 - [Regular Expressions][10]
+
 ## [React][11]
 - [React-webpack-ES6][12]
 - [Reactjs 学习笔记][13]
+
 ## [Book][14]
 - [ECMAScript6入门—阮一峰][15]
 - [JavaScript语言精粹][16]
 - [CSS 解密][17]
 - [高性能 JavaScript][18]
+
 ## [CSS][19]
 - [CSS3 2D转换和动画属性][20]
 - [CSS3 Gradient渐变][21]
 - [Grid Layout][22]
 - [flex布局的学习笔记][23]
 - [伪类和伪元素][24]
+
 ## [node.js][25]
 - [nodejs学习笔记一][26]
 - [nodejs学习笔记二][27]
+
 ## [others][28]
 - [gulp 学习笔记][29]
 - [前端开发规范][30]
