@@ -86,7 +86,9 @@ background-origin: content-box;
 ```
 
 <h3>4. 边框内圆角</h3>
+
 实现这个可以使用两个div，外面的设置边框，里面的div设置`border-radius`。这个方案更加灵活，但是，如果只需要达成实色效果还可以用另一种方法：
+
 ```
 background: tan;
 border-radius:.8em;
@@ -94,8 +96,11 @@ padding:1em;
 box-shadow:0 0 0 .6em #655;
 outline: .6em solid #655;
 ```
+
 上面代码的实现基于两个事实：
+
 1.描边不会跟着元素的圆角走(前面提到过)
+
 2.box-shadow会跟着边框走
 
 **注意：** box-shadow属性指定的扩张值并不一定 等于描边的值，，推荐使用稍小一些的值。
