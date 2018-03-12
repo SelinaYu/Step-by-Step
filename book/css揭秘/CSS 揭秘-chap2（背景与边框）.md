@@ -11,7 +11,7 @@ css编码技巧：
 
 2) 某些值相互依赖时，应该把它们的相互关系用代码表达出来
 
-3)css有史以来第一个变量 `currentColor`
+3) css有史以来第一个变量 `currentColor`
 
 <h1>chap 2</h1>
 
